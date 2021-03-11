@@ -32,12 +32,12 @@
           <template slot-scope="scope">
             <el-button
               size="mini"
-              type="text"
+              type="primary"
               @click="handleUpdate(scope.$index, scope.row)">编辑
             </el-button>
             <el-button
               size="mini"
-              type="text"
+              type="danger"
               @click="handleDelete(scope.$index, scope.row)">删除
             </el-button>
           </template>
@@ -89,9 +89,10 @@ export default {
     },
     getList () {
       this.listLoading = true
-      fetchList(this.parentId, this.listQuery).then(response => {
+      fetchList().then(response => {
+        console.log(response)
         this.listLoading = false
-        this.list = response.data
+        this.list = response.content
       })
     },
     handleSizeChange (val) {

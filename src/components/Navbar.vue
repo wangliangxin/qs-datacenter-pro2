@@ -5,6 +5,8 @@
       <el-breadcrumb-item :to="{ name: 'Home' }">Home</el-breadcrumb-item>
       <el-breadcrumb-item v-for="item in navbar.breadcrumbs" :key="item.name" :to="item">{{ item.text || item.name }}</el-breadcrumb-item>
     </el-breadcrumb>
+
+
     <el-dropdown @command="handleCommand" v-if="session.user">
       <img class="avatar" :src="portrait" :alt="session.user.userName" :title="session.user.userName">
       <el-dropdown-menu slot="dropdown">
@@ -12,6 +14,8 @@
         <el-dropdown-item command="logout" divided>登出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
+
+    
   </el-header>
 </template>
 
@@ -36,6 +40,7 @@ export default {
 
   created () {
     this.$store.dispatch('getCurrentUser')
+    // console.log(this.session.user)
   },
 
   methods: {

@@ -137,7 +137,7 @@ export default {
       this.listLoading = true
       listAllCate({}).then(response => {
         this.listLoading = false
-        this.list = response.data
+        this.list = response.content
       })
     }
   }

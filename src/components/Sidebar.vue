@@ -2,8 +2,8 @@
   <el-aside class="sidebar" width="auto">
     <!-- logo 和 title -->
     <router-link class="logo" :class="{ collapse: sidebar.collapse }" :to="{ name: 'Home' }" title="Back to Home">
-      <img src="../assets/logo.png" alt="LagouEdu">
-      <h1>Edu Boss</h1>
+      <img src="../assets/m-logo.jpg" alt="麒盛科技" style="width: 55px">
+      <h1 >KEESON</h1>
     </router-link>
 
     <el-menu :collapse="sidebar.collapse" router>

@@ -18,13 +18,13 @@ const routes = [
         component: Layout,
         children: [
 
-            // {
-            //     path: '/',
-            //     name: 'Home',
-            //     meta: { requireAuth: true, title: process.env.VUE_APP_NAME },
-            //     component: () =>
-            //         import ( /* webpackChunkName: 'home' */ '../views/Home.vue')
-            // },
+            {
+                path: '/',
+                name: 'Home',
+                meta: { requireAuth: true, title: process.env.VUE_APP_NAME },
+                component: () =>
+                    import ( /* webpackChunkName: 'home' */ '../views/Home.vue')
+            },
             {
                 path: '/',
                 name: 'Home',

@@ -86,11 +86,11 @@ export default {
   created () {
     getMenu(this.$route.query.id || -1).then(response => {
       if (this.isEdit) {
-        this.menu = response.data.menuInfo
+        this.menu = response.content.menuInfo
       } else {
         this.menu = Object.assign({}, defaultMenu)
       }
-      this.selectMenuList = response.data.parentMenuList.map(item => {
+      this.selectMenuList = response.content.parentMenuList.map(item => {
         return { id: item.id, title: item.name }
       })
       this.selectMenuList.unshift({ id: -1, title: '无上级菜单' })
@@ -99,7 +99,7 @@ export default {
   methods: {
     getSelectMenuList () {
       fetchList(0, { pageSize: 100, pageNum: 1 }).then(response => {
-        this.selectMenuList = response.data.list
+        this.selectMenuList = response.content.list
         this.selectMenuList.unshift({ id: 0, title: '无上级菜单' })
       })
     },

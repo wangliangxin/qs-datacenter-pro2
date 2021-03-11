@@ -241,13 +241,15 @@ export default {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.listLoading = false
-        this.list = response.data.records
-        this.total = response.data.total
+
+        console.log(response)
+        this.list = response.content.records
+        this.total = response.content.total
       })
     },
     getCateList () {
       listAllCate().then(response => {
-        const cateList = response.data
+        const cateList = response.content
         for (let i = 0; i < cateList.length; i++) {
           const cate = cateList[i]
           this.categoryOptions.push({ label: cate.name, value: cate.id })

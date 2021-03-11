@@ -14,8 +14,10 @@
       </el-form-item>
       <el-button type="primary" :loading="loading" @click="submit('login-form')">{{ loading ? 'Loading...' : '登录' }}</el-button>
     </el-form>
+
+    <!-- TODO -->
     <footer>
-      ← 回到 <a href="https://edufront.lagou.com">用户端</a>
+      ← 回到 <a href="#">用户端</a>
     </footer>
   </section>
 </template>

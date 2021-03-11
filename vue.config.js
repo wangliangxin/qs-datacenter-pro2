@@ -11,18 +11,18 @@ module.exports = {
     lintOnSave: process.env.NODE_ENV !== 'production',
     productionSourceMap: false,
     devServer: {
-        // proxy: {
-        //     '^/boss': {
-        //         target: 'http://192.168.11.28:9001',
-        //         pathRewrite: { '^/boss': '/boss' },
-        //         changeOrigin: true
-        //     },
-        //     '^/front': {
-        //         target: 'http://192.168.11.28:9001',
-        //         pathRewrite: { '^/front': '/front' },
-        //         changeOrigin: true
-        //     }
-        // }
+        proxy: {
+            '^/boss': {
+                target: 'http://192.168.11.28:9001',
+                pathRewrite: { '^/boss': '/boss' },
+                changeOrigin: true
+            },
+            '^/front': {
+                target: 'http://192.168.11.28:9001',
+                pathRewrite: { '^/front': '/front' },
+                changeOrigin: true
+            }
+        },
         open: true
     }
 }

@@ -55,7 +55,7 @@ export default {
     },
     getAllResourceCateList () {
       listAllCate(this.$route.query.roleId).then(response => {
-        this.allResourceCate = response.data
+        this.allResourceCate = response.content
         for (let i = 0; i < this.allResourceCate.length; i++) {
           this.allResourceCate[i].selected = false
         }

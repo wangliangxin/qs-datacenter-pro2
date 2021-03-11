@@ -171,8 +171,9 @@ export default {
       return this.$services.user.getUserList(params)
         .then(res => {
           // response
-          this.users = res.records
-          this.total = res.total
+          // console.log(res) // 000000
+          this.users = res.content.records
+          this.total = res.content.total
           // toggle loading
           this.loading = false
         })
@@ -217,16 +218,17 @@ export default {
     },
     getRoleListByAdmin (id) {
       getRoleByAdmin().then(response => {
-        this.allRoleList = response.data.map(item => {
+        this.allRoleList = response.content.map(item => {
           return { id: item.id, name: item.name }
         })
       })
       getRolesById(id).then(response => {
-        const allocRoleList = response.data
+        // console.log(response)
+        const allocRoleList = response.content
         this.allocRoleIds = []
         if (allocRoleList != null && allocRoleList.length > 0) {
           for (let i = 0; i < allocRoleList.length; i++) {
-            this.allocRoleIds.push(allocRoleList[i].id)
+            this.allocRoleIds.push(allocRoleList[i].name)
           }
         }
       })

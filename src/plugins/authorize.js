@@ -24,8 +24,6 @@ export default Vue => {
         store.dispatch('checkToken')
             .then(valid => {
                 // authorized
-
-                console.log(valid)
                 if (valid) {
                     store.dispatch('getUserPermissions').then(res => {
                         const { memusMap } = res
