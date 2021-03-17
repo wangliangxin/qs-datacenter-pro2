@@ -67,6 +67,7 @@
         <el-button type="primary" @click="handleAllocDialogConfirm()" size="small">确 定</el-button>
       </span>
     </el-dialog>
+    <img :src="imgUrl" />
   </section>
 
 </template>
@@ -74,6 +75,8 @@
 <script>
 import { getRoleByAdmin, getRolesById, allocRole } from '@/services/login'
 import moment from 'moment'
+
+import axios from 'axios'
 export default {
   name: 'Users',
   title: '用户管理',
@@ -134,6 +137,7 @@ export default {
   created () {
     // initial data
     this.loadUsers()
+    this.testImag()
   },
   methods: {
     loadUsers () {
@@ -182,6 +186,10 @@ export default {
           console.error(err)
           this.loading = false
         })
+        
+
+
+        
     },
 
     handleCurrentPageChange (page) {
@@ -201,7 +209,12 @@ export default {
     handleToggleStatus (item) {
       this.$services.user
         .forbidUser(item.id)
-        .then(res => Object.assign(item, res.data))
+        .then(
+          res => {
+            Object.assign(item, res.data)
+          }
+        )
+       this.loadUsers()
     },
 
     handleAdd () {
@@ -244,7 +257,21 @@ export default {
         })
         this.allocDialogVisible = false
       })
+    },
+    // http://localhost:9001/boss/snoring/localDownload?fileName=images/2021/03/16/456.jpg
+
+    testImag(){
+     axios.post('boss/snoring/localDownload?fileName=images/2021/03/16/456.jpg', {
+            responseType: "arraybuffer",
+          }).then(res => {
+           console.log(res.data.content);
+           this.imgUrl =res.data.content;
+          })
+          .catch(ex => {
+            console.error(ex);
+          });
     }
+
   }
 }
 </script>
