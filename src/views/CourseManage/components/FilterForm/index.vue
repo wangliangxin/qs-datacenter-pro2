@@ -8,7 +8,6 @@
       label-width="100px"
       label-position="left"
     >
-
       <el-row :gutter="15">
         <el-col :span="4">
           <el-form-item label="音频格式 :" prop="audioFormat">
@@ -91,7 +90,7 @@
           <el-form-item label="创建时间 :" prop="lastAccessedTime">
             <el-date-picker
               type="daterange"
-              v-model="formData.lastAccessedTimeMin"
+              v-model="formData.lastAccessedTime"
               format="yyyy-MM-dd"
               value-format="yyyy-MM-dd"
               :style="{ width: '100%' }"
@@ -135,12 +134,12 @@ export default {
   data() {
     return {
       formData: {
-        audioFormat: 1,
+        audioFormat: 'MP3',
         fileSizeMin: '',
         fileTimeMax: '',
         fileTimeMin: '',
         fileTimeMax: '',
-        lastAccessedTimeMin: [""],
+        lastAccessedTime: '',
         lastModifiedTime: '',
       },
       rules: {
@@ -149,22 +148,22 @@ export default {
         fileTimeMax: [],
         fileTimeMin: [],
         fileTimeMax: [],
-        lastAccessedTimeMin: [],
+        lastAccessedTime: [],
         lastModifiedTime: [],
       },
       audioFormatOptions: [
         {
           label: "MP3",
-          value: 1,
+          value: 'MP3',
         },
         {
           label: "MP4",
-          value: 2,
+          value: 'MP4',
         },
       ],
       toSymbol: '~',
-      SizeUnit: 's',
-      DurationUnit: 'kb'
+      SizeUnit: 'kb',
+      DurationUnit: 's'
     };
   },
   computed: {},
@@ -174,8 +173,8 @@ export default {
   methods: {
     submitForm() {
       this.$refs["elForm"].validate((valid) => {
-        if (!valid) return;
-        // TODO 提交表单
+        if (!valid) return ;
+        console.log(this.formData)
       });
     },
     resetForm() {

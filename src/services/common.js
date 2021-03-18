@@ -4,11 +4,13 @@ export const bossBase = process.env.VUE_APP_API_BASE
 export const frontBase = process.env.VUE_APP_API_BASE
 
 export const request = async(endpoint, options, method = 'get') => {
+
+
     const res = await axios[method](endpoint, options)
         // console.log(res)
-    if (res.data.data !== '000000') {
-        throw Error(res.data.mesg)
-    }
+        // if (res.data.data !== '000000') {
+        //     throw Error(res.data.mesg)
+        // }
     return res.data
 }
 

@@ -90,7 +90,7 @@ export default {
     getList () {
       this.listLoading = true
       fetchList().then(response => {
-        console.log(response)
+        // console.log(response)
         this.listLoading = false
         this.list = response.content
       })

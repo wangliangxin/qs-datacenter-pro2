@@ -6,7 +6,9 @@
     tooltip-effect="dark"
     style="width: 100%"
     stripe
-    @selection-change="handleSelectionChange">
+    @selection-change="handleSelectionChange"
+    v-loading="listLoading"
+    >
     <el-table-column
       type="selection"
       width="55">
@@ -29,7 +31,7 @@
        width="100">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="filePath"
       label="文件路径"
       show-overflow-tooltip
       sortable
@@ -53,7 +55,7 @@
        width="220">
     </el-table-column>
      <el-table-column
-      prop="isSnore"
+      prop="fileBool"
       label="是否是鼾声"
       show-overflow-tooltip
       width="120">
@@ -71,16 +73,17 @@
 
     </el-table-column>
   </el-table>
-
+<!-- 
   <div style="margin-top: 20px">
     <el-button @click="toggleSelection([tableData[1], tableData[2]])">切换第二、第三行的选中状态</el-button>
     <el-button @click="toggleSelection()">取消选择</el-button>
-  </div>
+  </div> -->
 
 </div>
 </template>
 
 <script>
+import { getQueryCourses } from '@/services/course'
   export default {
     data() {
       return {
@@ -93,21 +96,47 @@
           fileCreateTime: null,
           fileModifiedTime: '2020-10-21',
           isSnore: 'origin Snoring',
+        },{
+          fileName: 'HUSHUHUHUHHIHIHIHI',
+          fileType: 'MP4',
+          fileTime: '75.2s',
+          address: 'C://audio',
+          fileSize: '3.08M',
+          fileCreateTime: null,
+          fileModifiedTime: '2020-10-21',
+          isSnore: 'origin Snoring',
         }],
-        multipleSelection: []
+        multipleSelection: [],
+        listQuery:{
+            current: 1,
+            size: 10
+        },
+        listLoading: true
       }
     },
-
+    created(){
+        this.getData()
+    },
     methods: {
-      toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
-      },
+        getData(){
+            getQueryCourses(this.listQuery).then(res=>{
+                console.log(res.content.records)
+                // var {fileName, filePath, fileSize, fileTime, fileType , lastAccessedTime, lastModifiedTime,fileBool} = res.content.records
+                this.tableData = res.content.records
+                this.listLoading = false
+
+                console.log(this.tableData)
+            })
+        },
+    //   toggleSelection(rows) {
+    //     if (rows) {
+    //       rows.forEach(row => {
+    //         this.$refs.multipleTable.toggleRowSelection(row);
+    //       });
+    //     } else {
+    //       this.$refs.multipleTable.clearSelection();
+    //     }
+    //   },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       }
