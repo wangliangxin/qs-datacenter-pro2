@@ -1,0 +1,116 @@
+<template>
+<div>
+  <el-table
+    ref="multipleTable"
+    :data="tableData"
+    tooltip-effect="dark"
+    style="width: 100%"
+    stripe
+    @selection-change="handleSelectionChange">
+    <el-table-column
+      type="selection"
+      width="55">
+    </el-table-column>
+    <el-table-column
+    show-overflow-tooltip
+      label="文件名称"
+      width="120">
+      <template slot-scope="scope">{{ scope.row.fileName }}</template>
+    </el-table-column>
+    <el-table-column
+      prop="fileType"
+      label="文件类型"
+      sortable
+      width="100">
+    </el-table-column>
+    <el-table-column
+      prop="fileTime"
+      label="音频时长"
+       width="100">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="文件路径"
+      show-overflow-tooltip
+      sortable
+       width="140">
+    </el-table-column>
+     <el-table-column
+      prop="fileSize"
+      label="文件大小"
+      sortable
+       width="120">
+    </el-table-column>
+     <el-table-column
+      prop="fileCreateTime"
+      label="创建时间"
+      sortable
+       width="120">
+    </el-table-column>
+     <el-table-column
+      prop="fileModifiedTime"
+      label="最近修改时间"
+       width="220">
+    </el-table-column>
+     <el-table-column
+      prop="isSnore"
+      label="是否是鼾声"
+      show-overflow-tooltip
+      width="120">
+    </el-table-column>
+
+     <el-table-column
+      label="操作"
+       min-width="320">
+       <template>
+           <el-button type="success" size='mini' icon="el-icon-view" >预览</el-button>
+           <el-button type="warning" size='mini'  icon="el-icon-download" >下载</el-button>
+           <el-button type="primary" size='mini' icon="el-icon-edit">编辑</el-button>
+           <el-button type="danger" size='mini' icon="el-icon-delete">删除</el-button>
+       </template>
+
+    </el-table-column>
+  </el-table>
+
+  <div style="margin-top: 20px">
+    <el-button @click="toggleSelection([tableData[1], tableData[2]])">切换第二、第三行的选中状态</el-button>
+    <el-button @click="toggleSelection()">取消选择</el-button>
+  </div>
+
+</div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        tableData: [{
+          fileName: 'HUSHUHUHUHHIHIHIHI',
+          fileType: 'MP4',
+          fileTime: '75.2s',
+          address: 'C://audio',
+          fileSize: '3.08M',
+          fileCreateTime: null,
+          fileModifiedTime: '2020-10-21',
+          isSnore: 'origin Snoring',
+        }],
+        multipleSelection: []
+      }
+    },
+
+    methods: {
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      }
+    }
+  }
+</script>
