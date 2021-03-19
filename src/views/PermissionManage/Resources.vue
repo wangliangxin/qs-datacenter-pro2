@@ -242,7 +242,7 @@ export default {
       fetchList(this.listQuery).then(response => {
         this.listLoading = false
 
-        console.log(response)
+        // console.log(response)
         this.list = response.content.records
         this.total = response.content.total
       })

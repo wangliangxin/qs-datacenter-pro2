@@ -10,11 +10,13 @@
     v-loading="listLoading"
     >
     <el-table-column
+    align = 'center'
       type="selection"
       width="55">
     </el-table-column>
     <el-table-column
     show-overflow-tooltip
+    align = 'center'
       label="文件名称"
       width="120">
       <template slot-scope="scope">{{ scope.row.fileName }}</template>
@@ -22,47 +24,59 @@
     <el-table-column
       prop="fileType"
       label="文件类型"
+      align = 'center'
       sortable
       width="100">
     </el-table-column>
     <el-table-column
       prop="fileTime"
-      label="音频时长"
-       width="100">
+      label="音频时长(s)"
+      align = 'center'
+      sortable
+       width="120"> 
+       
     </el-table-column>
     <el-table-column
       prop="filePath"
       label="文件路径"
+      align = 'center'
       show-overflow-tooltip
-      sortable
        width="140">
     </el-table-column>
      <el-table-column
       prop="fileSize"
-      label="文件大小"
+      label="文件大小(kb)"
+      align = 'center'
       sortable
-       width="120">
+       width="140">
     </el-table-column>
      <el-table-column
-      prop="fileCreateTime"
+      prop="lastAccessedTime"
+      align = 'center'
       label="创建时间"
       sortable
-       width="120">
+       show-overflow-tooltip
+       width="200">
     </el-table-column>
      <el-table-column
-      prop="fileModifiedTime"
+      prop="lastModifiedTime"
+      align = 'center'
       label="最近修改时间"
-       width="220">
+      sortable
+       show-overflow-tooltip
+       width="200">
     </el-table-column>
      <el-table-column
       prop="fileBool"
       label="是否是鼾声"
+      align = 'center'
       show-overflow-tooltip
       width="120">
     </el-table-column>
 
      <el-table-column
       label="操作"
+      align = 'center'
        min-width="320">
        <template>
            <el-button type="success" size='mini' icon="el-icon-view" >预览</el-button>
@@ -78,6 +92,18 @@
     <el-button @click="toggleSelection([tableData[1], tableData[2]])">切换第二、第三行的选中状态</el-button>
     <el-button @click="toggleSelection()">取消选择</el-button>
   </div> -->
+  <div class="pagination-container">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        layout="total, sizes,prev, pager, next,jumper"
+        :current-page.sync="listQuery.current"
+        :page-size="listQuery.size"
+        :page-sizes="[10,15,20]"
+        :total="total">
+      </el-pagination>
+    </div>
 
 </div>
 </template>
@@ -87,31 +113,14 @@ import { getQueryCourses } from '@/services/course'
   export default {
     data() {
       return {
-        tableData: [{
-          fileName: 'HUSHUHUHUHHIHIHIHI',
-          fileType: 'MP4',
-          fileTime: '75.2s',
-          address: 'C://audio',
-          fileSize: '3.08M',
-          fileCreateTime: null,
-          fileModifiedTime: '2020-10-21',
-          isSnore: 'origin Snoring',
-        },{
-          fileName: 'HUSHUHUHUHHIHIHIHI',
-          fileType: 'MP4',
-          fileTime: '75.2s',
-          address: 'C://audio',
-          fileSize: '3.08M',
-          fileCreateTime: null,
-          fileModifiedTime: '2020-10-21',
-          isSnore: 'origin Snoring',
-        }],
+        tableData: [],
         multipleSelection: [],
         listQuery:{
             current: 1,
             size: 10
         },
-        listLoading: true
+        listLoading: true,
+        total: ''
       }
     },
     created(){
@@ -120,12 +129,18 @@ import { getQueryCourses } from '@/services/course'
     methods: {
         getData(){
             getQueryCourses(this.listQuery).then(res=>{
+                this.listLoading = true
                 console.log(res.content.records)
                 // var {fileName, filePath, fileSize, fileTime, fileType , lastAccessedTime, lastModifiedTime,fileBool} = res.content.records
                 this.tableData = res.content.records
-                this.listLoading = false
+                this.total = res.content.total
 
-                console.log(this.tableData)
+                setTimeout(() => {
+                    this.listLoading = false
+                }, 0.25*1000);
+                
+
+                // console.log(this.tableData)
             })
         },
     //   toggleSelection(rows) {
@@ -139,7 +154,21 @@ import { getQueryCourses } from '@/services/course'
     //   },
       handleSelectionChange(val) {
         this.multipleSelection = val;
+      },
+      handleSizeChange(val){
+          this.listQuery.size = val
+          this.getData()
+      },
+      handleCurrentChange(val){
+          this.listQuery.current = val
+          this.getData()
       }
     }
   }
 </script>
+
+<style  scoped>
+.pagination-container{
+    margin-top: 20px;
+}
+</style>
